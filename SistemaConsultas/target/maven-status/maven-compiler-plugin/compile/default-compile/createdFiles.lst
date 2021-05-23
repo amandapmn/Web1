@@ -1,0 +1,8 @@
+br/ufscar/dc/dsw/controller/SistemaConsultasController.class
+br/ufscar/dc/dsw/dao/GenericDAO.class
+br/ufscar/dc/dsw/dao/ProfissionalDAO.class
+br/ufscar/dc/dsw/dao/ClienteDAO.class
+br/ufscar/dc/dsw/domain/Cliente.class
+br/ufscar/dc/dsw/domain/Profissional.class
+br/ufscar/dc/dsw/domain/Usuario.class
+br/ufscar/dc/dsw/dao/UsuarioDAO.class
