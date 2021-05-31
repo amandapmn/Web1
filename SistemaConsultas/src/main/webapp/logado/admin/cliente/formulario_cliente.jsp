@@ -9,21 +9,21 @@
 
 <body>
 	<div align="center">
-		<h1>Gerenciamento de Profissionais</h1>
+		<h1>Gerenciamento de clientes</h1>
 		<h2>
-			<a href="profissionais">Lista de Profissionais</a>
+			<a href="clientes">Lista de clientes</a>
 		</h2>
 	</div>
 	<div align="center">
 		<c:choose>
-			<c:when test="${profissional != null}">
+			<c:when test="${cliente != null}">
 				<form action="atualizacao" method="post">
-					<%@include file="campos_profissional.jsp"%>
+					<%@include file="campos_cliente.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
 				<form action="insercao" method="post">
-					<%@include file="campos_profissional.jsp"%>
+					<%@include file="campos_cliente.jsp"%>
 				</form>
 			</c:otherwise>
 		</c:choose>

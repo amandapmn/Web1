@@ -11,10 +11,10 @@
         <p>Olá ${sessionScope.usuarioLogado.primeiroNome}</p>
         <ul>
             <li>
-                <a href="/SistemaConsultas/admin/usuarios">Usuarios</a>
+                <a href="/SistemaConsultas/admin/usuario/usuarios">Usuarios</a>
             </li>
             <li>
-                <a href="/SistemaConsultas/admin/clientes">Clientes</a>
+                <a href="/SistemaConsultas/admin/cliente/clientes">Clientes</a>
             </li>
             <li>
                 <a href="/SistemaConsultas/admin/profissional/profissionais">Profissionais</a>

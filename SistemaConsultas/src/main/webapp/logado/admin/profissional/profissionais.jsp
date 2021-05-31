@@ -31,13 +31,17 @@
 		         <td>${profissional.getUsuario().sobrenome}</td>
 		         <td>${profissional.especialidade}</td>
 		         <td>${profissional.qualificacoes}</td>
-		         <td><a href="/<%= contextPath%>/profissional/edicao?id=${profissional.getUsuario().id}">
-					<fmt:message key="profissional.update" />Editar</td></a> 
-					&nbsp;&nbsp;&nbsp;&nbsp; 
-					<a href="/<%= contextPath%>/profissional/remocao?id=${profissional.getUsuario().id}"
-					onclick="return confirm('<fmt:message key="confirm.link" />');">
-					<fmt:message key="profissional.delete" /></a></td>
+						<td><a href="/<%= contextPath%>/profissional/edicao?id=${profissional.id}">
+						</a> &nbsp;&nbsp;&nbsp;&nbsp; <a
+							href="/<%= contextPath%>/profissional/remocao?id=${profissional.id}"
+							onclick="return confirm('<fmt:message key="confirm.link" />');">
+						</a></td>
 				</tr>
+			<h2>
+				<a href="/<%=contextPath%>"></a>
+				&nbsp;&nbsp;&nbsp; <a href="/<%=contextPath%>/profissional/cadastro">
+				</a>
+			</h2>
 			</c:forEach>
 		</table>
 	</div>
