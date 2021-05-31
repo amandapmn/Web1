@@ -51,11 +51,38 @@ public class AdminController extends HttpServlet {
                 case "/usuarios":
                     usuarios(request, response);
                     break;
+                case "/usuarios_criacao":
+                    usuarios_criacao(request, response);
+                    break;
+                case "/usuarios_edicao":
+                    usuarios_edicao(request, response);
+                    break;
+                case "/usuarios_remocao":
+                    usuarios_remocao(request, response);
+                    break;
                 case "/clientes":
                     clientes(request, response);
                     break;
+                case "/clientes_criacao":
+                    clientes_criacao(request, response);
+                    break;
+                case "/clientes_edicao":
+                    clientes_edicao(request, response);
+                    break;
+                case "/clientes_remocao":
+                    clientes_remocao(request, response);
+                    break;
                 case "/profissionais":
                     profissionais(request, response);
+                    break;
+                case "/profissionais_criacao":
+                    profissionais_criacao(request, response);
+                    break;
+                case "/profissionais_edicao":
+                    profissionais_edicao(request, response);
+                    break;
+                case "/profissionais_remocao":
+                    profissionais_remocao(request, response);
                     break;
                 default:
                     index(request, response);
@@ -84,23 +111,240 @@ public class AdminController extends HttpServlet {
       dispatcher.forward(request, response);
     }
 
+    private void usuarios_criacao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      UsuarioDAO dao = new UsuarioDAO();
+      List<Usuario> listaUsuarios = dao.getAll();
+      request.setAttribute("listaUsuarios", listaUsuarios);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
+      dispatcher.forward(request, response);
+    }
+
+    private void usuarios_edicao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      UsuarioDAO dao = new UsuarioDAO();
+      List<Usuario> listaUsuarios = dao.getAll();
+      request.setAttribute("listaUsuarios", listaUsuarios);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
+      dispatcher.forward(request, response);
+    }
+
+    private void usuarios_remocao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      UsuarioDAO dao = new UsuarioDAO();
+      List<Usuario> listaUsuarios = dao.getAll();
+      request.setAttribute("listaUsuarios", listaUsuarios);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
+      dispatcher.forward(request, response);
+    }
+
     private void clientes(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       ClienteDAO dao = new ClienteDAO();
       List<Cliente> listaClientes = dao.getAll();
       request.setAttribute("listaClientes", listaClientes);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/clientes.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/clientes.jsp");
       dispatcher.forward(request, response);
+    }
+
+    private void clientes_criacao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      ClienteDAO clienteDAO = new ClienteDAO();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+      if(request.getParameter("email") != null &&
+       request.getParameter("senha") != null && request.getParameter("cpf") != null &&
+       request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
+       request.getParameter("telefone") != null && request.getParameter("sexo") != null &&
+       request.getParameter("dataNasc") != null){
+
+        //Informações do usuário
+        String email = String.valueOf(request.getParameter("email"));
+        String senha = String.valueOf(request.getParameter("senha"));
+        String cpf = String.valueOf(request.getParameter("cpf"));
+        String primeiroNome = String.valueOf(request.getParameter("primeiroNome"));
+        String sobrenome = String.valueOf(request.getParameter("sobrenome"));
+
+        ////Informações do cliente
+        String telefone = String.valueOf(request.getParameter("telefone"));
+        String sexo = String.valueOf(request.getParameter("sexo"));
+        String dataNasc = String.valueOf(request.getParameter("dataNasc"));
+
+        Usuario usuario = new Usuario(null, email, senha, cpf, primeiroNome, sobrenome, "CLIENTE");
+        Cliente cliente = new Cliente(null, usuario, telefone, sexo, dataNasc);
+        clienteDAO.insert(cliente);
+        clientes(request, response);
+      }else{
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/formulario_cliente.jsp");
+        dispatcher.forward(request, response);
+      }
+      return;
+    }
+
+    private void clientes_edicao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      ClienteDAO dao = new ClienteDAO();
+      if(request.getParameter("email") != null &&
+       request.getParameter("senha") != null && request.getParameter("cpf") != null &&
+       request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
+       request.getParameter("telefone") != null && request.getParameter("sexo") != null &&
+       request.getParameter("dataNasc") != null){
+
+        //Informações do usuário
+        String email = String.valueOf(request.getParameter("email"));
+        String senha = String.valueOf(request.getParameter("senha"));
+        String cpf = String.valueOf(request.getParameter("cpf"));
+        String primeiroNome = String.valueOf(request.getParameter("primeiroNome"));
+        String sobrenome = String.valueOf(request.getParameter("sobrenome"));
+
+        ////Informações do cliente
+        Long id = Long.parseLong(request.getParameter("id"));
+        String telefone = String.valueOf(request.getParameter("telefone"));
+        String sexo = String.valueOf(request.getParameter("sexo"));
+        String dataNasc = String.valueOf(request.getParameter("dataNasc"));
+
+        Cliente cliente = dao.get(id);
+
+        cliente.getUsuario().setEmail(email);
+        cliente.getUsuario().setSenha(senha);
+        cliente.getUsuario().setCPF(cpf);
+        cliente.getUsuario().setPrimeiroNome(primeiroNome);
+        cliente.getUsuario().setSobrenome(sobrenome);
+
+        cliente.setTelefone(telefone);
+        cliente.setSexo(sexo);
+        cliente.setDataNasc(dataNasc);
+
+        if(cliente != null){
+          dao.update(cliente);
+        }
+        clientes(request, response);
+      }
+      else if(request.getParameter("id") != null){
+        Long id = Long.parseLong(request.getParameter("id"));
+        Cliente cliente = dao.get(id);
+        request.setAttribute("cliente", cliente);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/formulario_cliente.jsp");
+        dispatcher.forward(request, response);
+      }
+      return;
+    }
+
+    private void clientes_remocao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      ClienteDAO dao = new ClienteDAO();
+      if(request.getParameter("id") != null){
+        Long id = Long.parseLong(request.getParameter("id"));
+        Cliente cliente = dao.get(id);
+        if(cliente != null){
+          dao.delete(cliente);
+        }
+      }
+      profissionais(request, response);
+      return;
     }
 
     private void profissionais(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       ProfissionalDAO dao = new ProfissionalDAO();
       List<Profissional> listaProfissionais = dao.getAll();
-      request.setAttribute("listaUsuarios", listaProfissionais);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissionais.jsp");
+      request.setAttribute("listaProfissionais", listaProfissionais);
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/profissionais.jsp");
       dispatcher.forward(request, response);
+
     }
+
+    private void profissionais_criacao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        ProfissionalDAO profissionalDAO = new ProfissionalDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        if(request.getParameter("email") != null &&
+         request.getParameter("senha") != null && request.getParameter("cpf") != null &&
+         request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
+         request.getParameter("especialidade") != null && request.getParameter("qualificacoes") != null){
+
+          //Informações do usuário
+          String email = String.valueOf(request.getParameter("email"));
+          String senha = String.valueOf(request.getParameter("senha"));
+          String cpf = String.valueOf(request.getParameter("cpf"));
+          String primeiroNome = String.valueOf(request.getParameter("primeiroNome"));
+          String sobrenome = String.valueOf(request.getParameter("sobrenome"));
+
+          ////Informações do profissional
+          String especialidade = String.valueOf(request.getParameter("especialidade"));
+          String qualificacoes = String.valueOf(request.getParameter("qualificacoes"));
+
+          Usuario usuario = new Usuario(null, email, senha, cpf, primeiroNome, sobrenome, "PROFISSIONAL");
+          Profissional profissional = new Profissional(null, usuario, especialidade, qualificacoes);
+          profissionalDAO.insert(profissional);
+          profissionais(request, response);
+        }else{
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/formulario_profissional.jsp");
+          dispatcher.forward(request, response);
+        }
+        return;
+    }
+
+    private void profissionais_edicao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+      ProfissionalDAO dao = new ProfissionalDAO();
+      if(request.getParameter("id") != null && request.getParameter("email") != null &&
+       request.getParameter("senha") != null && request.getParameter("cpf") != null &&
+       request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
+       request.getParameter("especialidade") != null && request.getParameter("qualificacoes") != null){
+
+        //Informações do usuário
+        String email = String.valueOf(request.getParameter("email"));
+        String senha = String.valueOf(request.getParameter("senha"));
+        String cpf = String.valueOf(request.getParameter("cpf"));
+        String primeiroNome = String.valueOf(request.getParameter("primeiroNome"));
+        String sobrenome = String.valueOf(request.getParameter("sobrenome"));
+
+        ////Informações do profissional
+        Long id = Long.parseLong(request.getParameter("id"));
+        String especialidade = String.valueOf(request.getParameter("especialidade"));
+        String qualificacoes = String.valueOf(request.getParameter("qualificacoes"));
+
+        Profissional profissional = dao.get(id);
+
+        profissional.getUsuario().setEmail(email);
+        profissional.getUsuario().setSenha(senha);
+        profissional.getUsuario().setCPF(cpf);
+        profissional.getUsuario().setPrimeiroNome(primeiroNome);
+        profissional.getUsuario().setSobrenome(sobrenome);
+
+        profissional.setEspecialidade(especialidade);
+        profissional.setQualificacoes(qualificacoes);
+
+        if(profissional != null){
+          dao.update(profissional);
+        }
+        profissionais(request, response);
+      }
+      else if(request.getParameter("id") != null){
+        Long id = Long.parseLong(request.getParameter("id"));
+        Profissional profissional = dao.get(id);
+        request.setAttribute("profissional", profissional);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/formulario_profissional.jsp");
+        dispatcher.forward(request, response);
+      }
+      return;
+    }
+
+    private void profissionais_remocao(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ProfissionalDAO dao = new ProfissionalDAO();
+        if(request.getParameter("id") != null){
+          Long id = Long.parseLong(request.getParameter("id"));
+          Profissional profissional = dao.get(id);
+          if(profissional != null){
+            dao.delete(profissional);
+          }
+        }
+        profissionais(request, response);
+        return;
+    }
+
 
     private void index(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

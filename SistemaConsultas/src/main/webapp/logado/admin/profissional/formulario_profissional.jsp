@@ -17,12 +17,12 @@
 	<div align="center">
 		<c:choose>
 			<c:when test="${profissional != null}">
-				<form action="atualizacao" method="post">
+				<form action="/SistemaConsultas/admin/profissionais_edicao" method="get">
 					<%@include file="campos_profissional.jsp"%>
 				</form>
 			</c:when>
 			<c:otherwise>
-				<form action="insercao" method="post">
+				<form action="/SistemaConsultas/admin/profissionais_criacao" method="get">
 					<%@include file="campos_profissional.jsp"%>
 				</form>
 			</c:otherwise>

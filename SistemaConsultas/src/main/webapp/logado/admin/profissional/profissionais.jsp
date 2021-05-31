@@ -20,22 +20,21 @@
 				<th>Sobrenome</th>
 				<th>Especialidade</th>
         		<th>Qualificações</th>
-        		<th>Excluir</th>
         		<th>Editar</th>
+        		<th>Excluir</th>
 			</tr>
 			<c:forEach var="profissional" items="${requestScope.listaProfissionais}">
 				<tr>
-				<td>${profissional.getUsuario().id}</td>
+				<td>${profissional.getId()}</td>
 		        <td>${profissional.getUsuario().email}</td>
 		         <td>${profissional.getUsuario().primeiroNome}</td>
 		         <td>${profissional.getUsuario().sobrenome}</td>
 		         <td>${profissional.especialidade}</td>
 		         <td>${profissional.qualificacoes}</td>
-						<td><a href="/<%= contextPath%>/profissional/edicao?id=${profissional.id}">
-						</a> &nbsp;&nbsp;&nbsp;&nbsp; <a
-							href="/<%= contextPath%>/profissional/remocao?id=${profissional.id}"
-							onclick="return confirm('<fmt:message key="confirm.link" />');">
-						</a></td>
+		         <td><a href="/SistemaConsultas/admin/profissionais_edicao?id=${profissional.getId()}">Editar</td></a>
+						 <td>
+					<a href="/SistemaConsultas/admin/profissionais_remocao?id=${profissional.getId()}"
+					onclick="return confirm('Deseja confirmar a exclusão?');">Excluir</a></td>
 				</tr>
 			<h2>
 				<a href="/<%=contextPath%>"></a>

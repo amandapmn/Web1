@@ -12,7 +12,9 @@ import br.ufscar.dc.dsw.domain.Usuario;
 
 public class UsuarioDAO extends GenericDAO {
 
-    public void insert(Usuario usuario) {
+    public Long insert(Usuario usuario) {
+
+        Long last_id = null;
 
         String sql = "INSERT INTO usuario (email, senha, cpf, primeiro_nome, sobrenome, papel) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -27,13 +29,25 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(4, usuario.getPrimeiroNome());
             statement.setString(5, usuario.getSobrenome());
             statement.setString(6, usuario.getPapel());
-            statement.executeUpdate();
+            statement.execute();
 
+
+            sql = "SELECT LAST_INSERT_ID()";
+            statement = conn.prepareStatement(sql);
+            statement.execute();
+
+            ResultSet  resultSet = statement.getResultSet();
+            if (resultSet.next()) {
+                last_id = resultSet.getLong("LAST_INSERT_ID()");
+
+            }
             statement.close();
             conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return last_id;
     }
 
     public void delete(Usuario usuario) {
@@ -67,6 +81,7 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(4, usuario.getPrimeiroNome());
             statement.setString(5, usuario.getSobrenome());
             statement.setString(6, usuario.getPapel());
+            statement.setLong(7, usuario.getId());
             statement.executeUpdate();
 
             statement.close();

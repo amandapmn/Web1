@@ -15,7 +15,8 @@ import br.ufscar.dc.dsw.dao.UsuarioDAO;
 //Usuario já deve estar dentro do objeto Profissional
 
 public class ClienteDAO extends GenericDAO {
-    UsuarioDAO usuarioDAO;
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+
     public void insert(Cliente cliente) {
 
         String sql = "INSERT INTO cliente (id_usuario, telefone, sexo, data_nasc) VALUES (?, ?, ?, ?)";
@@ -25,7 +26,7 @@ public class ClienteDAO extends GenericDAO {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement = conn.prepareStatement(sql);
-            statement.setLong(1, cliente.getUsuario().getId());
+            statement.setLong(1, usuarioDAO.insert(cliente.getUsuario()));
             statement.setString(2, cliente.getTelefone());
             statement.setString(3, cliente.getSexo());
             statement.setString(4, cliente.getDataNasc());
@@ -44,7 +45,7 @@ public class ClienteDAO extends GenericDAO {
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-
+            //usuarioDAO.delete(cliente.getUsuario());
             statement.setLong(1, cliente.getId());
             statement.executeUpdate();
 
@@ -63,10 +64,11 @@ public class ClienteDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setLong(1, cliente.getUsuario().getId());
-            statement.setString(2, cliente.getTelefone());
-            statement.setString(3, cliente.getSexo());
-            statement.setString(4, cliente.getDataNasc());
+            usuarioDAO.update(cliente.getUsuario());
+            statement.setString(1, cliente.getTelefone());
+            statement.setString(2, cliente.getSexo());
+            statement.setString(3, cliente.getDataNasc());
+            statement.setLong(4, cliente.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -120,7 +122,7 @@ public class ClienteDAO extends GenericDAO {
               Usuario usuario = usuarioDAO.get(resultSet.getLong("id_usuario"));
               String telefone =  resultSet.getString("telefone");
               String sexo = resultSet.getString("sexo");
-              String dataNasc =  resultSet.getString("dataNasc");
+              String dataNasc =  resultSet.getString("data_nasc");
               cliente = new Cliente(id, usuario, telefone, sexo, dataNasc);
             }
 

@@ -33,11 +33,9 @@
 			<td>${cliente.telefone}</td>
 			<td>${cliente.sexo}</td>
 			<td>${cliente.dataNasc}</td>
-			<td><a href="/<%= contextPath%>/cliente/edicao?id=${cliente.id}">
-			</a> &nbsp;&nbsp;&nbsp;&nbsp; <a
-				href="/<%= contextPath%>/cliente/remocao?id=${cliente.id}"
-			onclick="return confirm('<fmt:message key="confirm.link" />');">
-			</a></td>
+			<td><a href="/SistemaConsultas/admin/clientes_edicao?id=${cliente.getId()}">Editar</td></a>
+			<td><a href="/SistemaConsultas/admin/clientes_remocao?id=${cliente.getId()}"
+	 		onclick="return confirm('Deseja confirmar a exclusão?');">Excluir</a></td>
 				</tr>
 			</c:forEach>
 		</table>

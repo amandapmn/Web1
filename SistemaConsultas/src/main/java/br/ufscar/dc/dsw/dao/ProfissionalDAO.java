@@ -15,7 +15,7 @@ import br.ufscar.dc.dsw.dao.UsuarioDAO;
 //Usuario já deve estar dentro do objeto Profissional
 public class ProfissionalDAO extends GenericDAO {
 
-    UsuarioDAO usuarioDAO;
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public void insert(Profissional profissional) {
 
@@ -26,9 +26,11 @@ public class ProfissionalDAO extends GenericDAO {
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement = conn.prepareStatement(sql);
-            statement.setLong(1, profissional.getUsuario().getId());
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            statement.setLong(1, usuarioDAO.insert(profissional.getUsuario()));
             statement.setString(2, profissional.getEspecialidade());
             statement.setString(3, profissional.getQualificacoes());
+
             statement.executeUpdate();
 
             statement.close();
@@ -44,7 +46,7 @@ public class ProfissionalDAO extends GenericDAO {
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-
+            //usuarioDAO.delete(profissional.getUsuario());
             statement.setLong(1, profissional.getId());
             statement.executeUpdate();
 
@@ -57,14 +59,17 @@ public class ProfissionalDAO extends GenericDAO {
 
     public void update(Profissional profissional) {
         String sql = "UPDATE profissional SET especialidade = ?, qualificacoes = ?";
-        sql += " WHERE id = ?";
+        sql += " WHERE id = ?;";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(2, profissional.getEspecialidade());
-            statement.setString(3, profissional.getQualificacoes());
+            UsuarioDAO usuarioDao = new UsuarioDAO();
+            usuarioDAO.update(profissional.getUsuario());
+            statement.setString(1, profissional.getEspecialidade());
+            statement.setString(2, profissional.getQualificacoes());
+            statement.setLong(3, profissional.getId());
             statement.executeUpdate();
 
             statement.close();

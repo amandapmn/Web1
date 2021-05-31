@@ -6,7 +6,7 @@ SET foreign_key_checks=0;
 CREATE TABLE usuario (
   id BIGINT UNSIGNED AUTO_INCREMENT,
   email VARCHAR(254) NOT NULL UNIQUE,
-  senha VARCHAR(1024) NOT NULL UNIQUE,
+  senha VARCHAR(1024) NOT NULL,
   cpf VARCHAR(14) NOT NULL,
   primeiro_nome VARCHAR(255) NOT NULL,
   sobrenome VARCHAR(512) NOT NULL,
@@ -45,3 +45,6 @@ CREATE TABLE consulta (
 );
 
 INSERT INTO usuario (email, senha, cpf, primeiro_nome, sobrenome, papel) VALUES ("admin@admin.com", "12345678", "999.999.999.99", "Admin", "Admin", "ADMIN");
+SELECT LAST_INSERT_ID();
+INSERT into usuario (email, senha, cpf, primeiro_nome, sobrenome, papel) VALUES ("nathan@gmail.com", "12345678", "448.448.449.49", "Nathan", "Oliveira", "PROFISSIONAL");
+INSERT into profissional (id_usuario, especialidade, qualificacoes) VALUES (2, "Computeiro", "UFSCar");
