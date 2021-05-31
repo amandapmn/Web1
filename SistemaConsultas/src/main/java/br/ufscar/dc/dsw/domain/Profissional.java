@@ -1,6 +1,10 @@
 package br.ufscar.dc.dsw.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Consulta;
 
 public class Profissional {
 
@@ -8,6 +12,7 @@ public class Profissional {
     private Usuario usuario;
     private String especialidade;
     private String qualificacoes;
+    private List<Consulta> consultas;
 
     public Profissional(Long id) {
         this.id = id;
@@ -50,6 +55,13 @@ public class Profissional {
 
     public void setQualificacoes(String qualificacoes) {
         this.qualificacoes = qualificacoes;
+    }
+
+    public List<Consulta> getConsultas(){
+      return consultas;
+    }
+    public void setConsultas(List<Consulta> consultas){
+      this.consultas = consultas;
     }
 
 }

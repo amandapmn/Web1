@@ -134,4 +134,31 @@ public class ProfissionalDAO extends GenericDAO {
         }
         return profissional;
     }
+
+    public Profissional getByUsuario(Usuario usuario) {
+        Profissional profissional = null;
+
+        String sql = "SELECT * from profissional where id_usuario = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, usuario.getId());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String especialidade = resultSet.getString("especialidade");
+                String qualificacoes = resultSet.getString("qualificacoes");
+                profissional = new Profissional(id, usuario, especialidade, qualificacoes);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return profissional;
+    }
 }

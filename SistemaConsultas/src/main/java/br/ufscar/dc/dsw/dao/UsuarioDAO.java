@@ -183,4 +183,62 @@ public class UsuarioDAO extends GenericDAO {
         }
         return usuario;
     }
+
+    public boolean verificaEmail(Usuario usuario) {
+
+        String sql = "SELECT id from usuario WHERE email = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, usuario.getEmail());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	  Long id = resultSet.getLong("id");
+                if(id != usuario.getId()){
+                  resultSet.close();
+                  statement.close();
+                  conn.close();
+                  return false;
+                }
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+
+    public boolean verificaCPF(Usuario usuario) {
+
+        String sql = "SELECT id from usuario WHERE cpf = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, usuario.getCPF());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+            	  Long id = resultSet.getLong("id");
+                if(id != usuario.getId()){
+                  resultSet.close();
+                  statement.close();
+                  conn.close();
+                  return false;
+                }
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
 }

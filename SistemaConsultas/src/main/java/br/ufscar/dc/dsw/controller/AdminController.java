@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import br.ufscar.dc.dsw.util.Erro;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/admin/*")
 public class AdminController extends HttpServlet {
@@ -48,18 +50,6 @@ public class AdminController extends HttpServlet {
         		response.sendRedirect("/SistemaConsultas/publico/login");
         	} else if (usuario.getPapel().equals("ADMIN")) {
             switch (action) {
-                case "/usuarios":
-                    usuarios(request, response);
-                    break;
-                case "/usuarios_criacao":
-                    usuarios_criacao(request, response);
-                    break;
-                case "/usuarios_edicao":
-                    usuarios_edicao(request, response);
-                    break;
-                case "/usuarios_remocao":
-                    usuarios_remocao(request, response);
-                    break;
                 case "/clientes":
                     clientes(request, response);
                     break;
@@ -102,42 +92,6 @@ public class AdminController extends HttpServlet {
 
     }
 
-    private void usuarios(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-      UsuarioDAO dao = new UsuarioDAO();
-      List<Usuario> listaUsuarios = dao.getAll();
-      request.setAttribute("listaUsuarios", listaUsuarios);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
-      dispatcher.forward(request, response);
-    }
-
-    private void usuarios_criacao(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-      UsuarioDAO dao = new UsuarioDAO();
-      List<Usuario> listaUsuarios = dao.getAll();
-      request.setAttribute("listaUsuarios", listaUsuarios);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
-      dispatcher.forward(request, response);
-    }
-
-    private void usuarios_edicao(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-      UsuarioDAO dao = new UsuarioDAO();
-      List<Usuario> listaUsuarios = dao.getAll();
-      request.setAttribute("listaUsuarios", listaUsuarios);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
-      dispatcher.forward(request, response);
-    }
-
-    private void usuarios_remocao(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-      UsuarioDAO dao = new UsuarioDAO();
-      List<Usuario> listaUsuarios = dao.getAll();
-      request.setAttribute("listaUsuarios", listaUsuarios);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/usuarios.jsp");
-      dispatcher.forward(request, response);
-    }
-
     private void clientes(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       ClienteDAO dao = new ClienteDAO();
@@ -169,10 +123,28 @@ public class AdminController extends HttpServlet {
         String sexo = String.valueOf(request.getParameter("sexo"));
         String dataNasc = String.valueOf(request.getParameter("dataNasc"));
 
+
         Usuario usuario = new Usuario(null, email, senha, cpf, primeiroNome, sobrenome, "CLIENTE");
         Cliente cliente = new Cliente(null, usuario, telefone, sexo, dataNasc);
-        clienteDAO.insert(cliente);
-        clientes(request, response);
+
+        List<String> messages = new ArrayList<>();
+        if(usuarioDAO.verificaEmail(usuario) == false){
+          messages.add("email_exists");
+        }
+        if(usuarioDAO.verificaCPF(usuario) == false){
+          messages.add("cpf_exists");
+        }
+
+        if(messages.size() > 0){
+          request.setAttribute("mensagens", messages);
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/formulario_cliente.jsp");
+          dispatcher.forward(request, response);
+        }
+        else{
+          clienteDAO.insert(cliente);
+          response.sendRedirect("/SistemaConsultas/admin/clientes");
+        }
+
       }else{
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/formulario_cliente.jsp");
         dispatcher.forward(request, response);
@@ -183,6 +155,8 @@ public class AdminController extends HttpServlet {
     private void clientes_edicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       ClienteDAO dao = new ClienteDAO();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
+
       if(request.getParameter("email") != null &&
        request.getParameter("senha") != null && request.getParameter("cpf") != null &&
        request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
@@ -214,10 +188,27 @@ public class AdminController extends HttpServlet {
         cliente.setSexo(sexo);
         cliente.setDataNasc(dataNasc);
 
-        if(cliente != null){
-          dao.update(cliente);
+        List<String> messages = new ArrayList<>();
+        if(usuarioDAO.verificaEmail(cliente.getUsuario()) == false){
+          messages.add("email_exists");
         }
-        clientes(request, response);
+        if(usuarioDAO.verificaCPF(cliente.getUsuario()) == false){
+          messages.add("cpf_exists");
+        }
+
+        if(messages.size() > 0){
+          request.setAttribute("mensagens", messages);
+          request.setAttribute("cliente", cliente);
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/cliente/formulario_cliente.jsp");
+          dispatcher.forward(request, response);
+        }
+        else{
+          if(cliente != null){
+            dao.update(cliente);
+          }
+          response.sendRedirect("/SistemaConsultas/admin/clientes");
+        }
+
       }
       else if(request.getParameter("id") != null){
         Long id = Long.parseLong(request.getParameter("id"));
@@ -276,8 +267,25 @@ public class AdminController extends HttpServlet {
 
           Usuario usuario = new Usuario(null, email, senha, cpf, primeiroNome, sobrenome, "PROFISSIONAL");
           Profissional profissional = new Profissional(null, usuario, especialidade, qualificacoes);
-          profissionalDAO.insert(profissional);
-          profissionais(request, response);
+
+          List<String> messages = new ArrayList<>();
+          if(usuarioDAO.verificaEmail(usuario) == false){
+            messages.add("email_exists");
+          }
+          if(usuarioDAO.verificaCPF(usuario) == false){
+            messages.add("cpf_exists");
+          }
+
+          if(messages.size() > 0){
+            request.setAttribute("mensagens", messages);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/formulario_profissional.jsp");
+            dispatcher.forward(request, response);
+          }
+          else{
+            profissionalDAO.insert(profissional);
+            response.sendRedirect("/SistemaConsultas/admin/profissionais");
+          }
+
         }else{
           RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/formulario_profissional.jsp");
           dispatcher.forward(request, response);
@@ -288,6 +296,7 @@ public class AdminController extends HttpServlet {
     private void profissionais_edicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       ProfissionalDAO dao = new ProfissionalDAO();
+      UsuarioDAO usuarioDAO = new UsuarioDAO();
       if(request.getParameter("id") != null && request.getParameter("email") != null &&
        request.getParameter("senha") != null && request.getParameter("cpf") != null &&
        request.getParameter("primeiroNome") != null && request.getParameter("sobrenome") != null &&
@@ -316,10 +325,27 @@ public class AdminController extends HttpServlet {
         profissional.setEspecialidade(especialidade);
         profissional.setQualificacoes(qualificacoes);
 
-        if(profissional != null){
-          dao.update(profissional);
+        List<String> messages = new ArrayList<>();
+        if(usuarioDAO.verificaEmail(profissional.getUsuario()) == false){
+          messages.add("email_exists");
         }
-        profissionais(request, response);
+        if(usuarioDAO.verificaCPF(profissional.getUsuario()) == false){
+          messages.add("cpf_exists");
+        }
+
+        if(messages.size() > 0){
+          request.setAttribute("mensagens", messages);
+          request.setAttribute("profissional", profissional);
+          RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/profissional/formulario_profissional.jsp");
+          dispatcher.forward(request, response);
+        }
+        else{
+          if(profissional != null){
+            dao.update(profissional);
+          }
+          response.sendRedirect("/SistemaConsultas/admin/profissionais");
+        }
+
       }
       else if(request.getParameter("id") != null){
         Long id = Long.parseLong(request.getParameter("id"));

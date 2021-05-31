@@ -12,8 +12,6 @@ import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
 
-//Usuario já deve estar dentro do objeto Profissional
-
 public class ClienteDAO extends GenericDAO {
     UsuarioDAO usuarioDAO = new UsuarioDAO();
 

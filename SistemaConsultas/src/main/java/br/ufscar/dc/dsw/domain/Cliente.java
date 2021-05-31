@@ -1,6 +1,10 @@
 package br.ufscar.dc.dsw.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Consulta;
 
 public class Cliente {
 
@@ -9,6 +13,7 @@ public class Cliente {
     private String telefone;
     private String sexo;
     private String dataNasc;
+    private List<Consulta> consultas;
 
     public Cliente(Long id) {
         this.id = id;
@@ -60,6 +65,13 @@ public class Cliente {
 
     public void setDataNasc(String dataNasc) {
         this.dataNasc = dataNasc;
+    }
+
+    public List<Consulta> getConsultas(){
+      return consultas;
+    }
+    public void setConsultas(List<Consulta> consultas){
+      this.consultas = consultas;
     }
 
 }
