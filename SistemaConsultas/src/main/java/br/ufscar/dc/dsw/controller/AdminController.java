@@ -230,7 +230,7 @@ public class AdminController extends HttpServlet {
           dao.delete(cliente);
         }
       }
-      profissionais(request, response);
+      clientes(request, response);
       return;
     }
 

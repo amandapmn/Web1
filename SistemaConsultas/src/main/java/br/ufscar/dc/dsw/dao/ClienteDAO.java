@@ -38,20 +38,7 @@ public class ClienteDAO extends GenericDAO {
     }
 
     public void delete(Cliente cliente) {
-        String sql = "DELETE FROM cliente where id = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            //usuarioDAO.delete(cliente.getUsuario());
-            statement.setLong(1, cliente.getId());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+      usuarioDAO.delete(cliente.getUsuario());  
     }
 
     public void update(Cliente cliente) {

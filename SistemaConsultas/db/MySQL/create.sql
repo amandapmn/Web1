@@ -22,7 +22,7 @@ CREATE TABLE cliente (
   data_nasc VARCHAR(14) NOT NULL,
   id_usuario BIGINT UNSIGNED,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE profissional (
@@ -31,7 +31,7 @@ CREATE TABLE profissional (
   qualificacoes VARCHAR(512) NOT NULL,
   id_usuario BIGINT UNSIGNED,
   PRIMARY KEY (id),
-  FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id) ON DELETE CASCADE
 );
 
 CREATE TABLE consulta (

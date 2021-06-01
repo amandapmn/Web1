@@ -9,6 +9,11 @@
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
+
+	<div align="center">
+
+		<%@include file="/menu.jsp"%>
+
 		<form action="/SistemaConsultas/publico/listaClientes" method="get">
 			<input id="todas" type="radio" name="opcao" value="0" checked='checked'>Todas as especialidades<br>
 			<input id="pesquisar" type="radio" name="opcao" value="1">Pesquisar <br>
@@ -29,7 +34,6 @@
     };
 		</script>
 
-	<div align="center">
 		<table border="1">
 			<caption>Lista de Profissionais</caption>
 			<tr>
@@ -39,6 +43,7 @@
 				<th>Sobrenome</th>
 				<th>Especialidade</th>
         <th>Qualificações</th>
+
 				<c:if test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
 				<th>Marcar Consulta</th>
 				</c:if>

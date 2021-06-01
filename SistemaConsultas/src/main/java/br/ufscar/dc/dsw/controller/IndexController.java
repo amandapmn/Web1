@@ -83,8 +83,8 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
       request.getSession().setAttribute("usuarioLogado", null);
       request.getSession().invalidate();
-      RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-      rd.forward(request, response);
+      response.sendRedirect("/SistemaConsultas/publico/login");
+      return;
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response)

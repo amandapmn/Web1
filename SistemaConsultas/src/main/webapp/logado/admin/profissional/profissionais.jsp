@@ -11,7 +11,8 @@
 	%>
 
 	<div align="center">
-		<h3><a href="SistemaConsultas/admin/profissionais_criacao">Adicionar profissionais</a></h3>
+		<%@include file="/menu.jsp"%>
+		<h3><a href="/SistemaConsultas/admin/profissionais_criacao">Adicionar profissional</a></h3>
 		<table border="1">
 			<caption>Lista de Profissionais</caption>
 			<tr>

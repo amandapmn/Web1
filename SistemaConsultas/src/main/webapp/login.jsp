@@ -1,4 +1,4 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -8,6 +8,7 @@
         <title>Autenticação de Usuário</title>
     </head>
     <body>
+        <%@include file="/menu.jsp"%>
         <h1>Autenticação de Usuário</h1>
         <c:if test="${mensagens.existeErros}">
             <div id="erro">

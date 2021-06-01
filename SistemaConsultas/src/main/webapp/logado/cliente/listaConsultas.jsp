@@ -13,6 +13,7 @@
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
 	<div align="center">
+		<%@include file="/menu.jsp"%>
 		<table border="1">
 			<caption><fmt:message key="titulotabela"/></caption>
 			<tr>

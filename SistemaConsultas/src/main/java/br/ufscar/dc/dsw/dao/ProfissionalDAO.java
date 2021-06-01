@@ -41,20 +41,7 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public void delete(Profissional profissional) {
-        String sql = "DELETE FROM profissional where id = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-            //usuarioDAO.delete(profissional.getUsuario());
-            statement.setLong(1, profissional.getId());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+      usuarioDAO.delete(profissional.getUsuario());
     }
 
     public void update(Profissional profissional) {
