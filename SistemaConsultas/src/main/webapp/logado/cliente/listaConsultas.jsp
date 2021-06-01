@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html>
 <head>
-<title>Minhas consultas</title>
+	<fmt:bundle basename="formsConsulta">
+<title><fmt:message key="tituloMinhasConsultas"/></title>
 </head>
 <body>
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
-
 	<div align="center">
 		<table border="1">
-			<caption>Minhas consultas</caption>
+			<caption><fmt:message key="titulotabela"/></caption>
 			<tr>
-				<th>Nome profissional</th>
-        <th>Especialidade</th>
-				<th>Dia/Horário</th>
+				<th><fmt:message key="nomeprofissional"/></th>
+        <th><fmt:message key="especialidade"/></th>
+				<th><fmt:message key="diahorario"/></th>
 			</tr>
 			<c:forEach var="consulta" items="${requestScope.listaConsultas}">
 				<tr>
@@ -27,5 +29,6 @@
 			</c:forEach>
 		</table>
 	</div>
+	</fmt:bundle>
 </body>
 </html>

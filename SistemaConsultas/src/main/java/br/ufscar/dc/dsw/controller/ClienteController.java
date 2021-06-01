@@ -24,6 +24,12 @@ import br.ufscar.dc.dsw.util.Erro;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import javax.mail.internet.InternetAddress;
+
+import br.ufscar.dc.dsw.util.EmailService;
+
 @WebServlet(urlPatterns = "/cliente/*")
 public class ClienteController extends HttpServlet {
 
@@ -115,6 +121,7 @@ public class ClienteController extends HttpServlet {
             consulta.setProfissional(profissional);
             if(consultaDAO.verificaDataHorario(consulta) == true){
               consultaDAO.insert(consulta);
+              enviarEmail(consulta);
               response.sendRedirect("/SistemaConsultas/cliente/minhasConsultas");
             }
             else{
@@ -151,4 +158,36 @@ public class ClienteController extends HttpServlet {
       dispatcher.forward(request, response);
     }
 
+    private void enviarEmail(Consulta consulta) throws UnsupportedEncodingException{
+      EmailService service = new EmailService();
+
+  		InternetAddress from = new InternetAddress("dsw1sistemaconsultas@gmail.com", "SistemaConsultas");
+  		InternetAddress to1 = new InternetAddress(consulta.getCliente().getUsuario().getEmail(),
+       consulta.getCliente().getUsuario().getPrimeiroNome());
+  		InternetAddress to2 = new InternetAddress(consulta.getProfissional().getUsuario().getEmail(),
+       consulta.getProfissional().getUsuario().getPrimeiroNome());
+
+  		String subject1 = "Consulta.me: Consulta marcada com sucesso!";
+  		String subject2 = "Consulta.me: Nova consulta marcada";
+
+  		String body1 = "Consulta agendada com sucesso. Segue informações:"
+  				+ "Profissional: " + consulta.getProfissional().getUsuario().getPrimeiroNome()
+          + " " + consulta.getProfissional().getUsuario().getSobrenome()
+  				+ "Especialidade: " + consulta.getProfissional().getEspecialidade()
+  				+ "Data e horário: " + consulta.getDataHorario()
+  				+ "Link da consulta: " + consulta.getVideoconferencia();
+
+  		String body2 = "Nova consulta agendada. Segue informações:"
+  				+ "Cliente: " + consulta.getCliente().getUsuario().getPrimeiroNome()
+          + " " + consulta.getCliente().getUsuario().getSobrenome()
+  				+ "Data e horário: " + consulta.getDataHorario()
+  				+ "Link da consulta: " + consulta.getVideoconferencia();
+
+  		// Envio cliente
+  		service.send(from, to1, subject1, body1);
+
+  		// Envio profissional
+  		service.send(from, to2, subject2, body2);
+      return;
+    }
 }

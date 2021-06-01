@@ -9,14 +9,18 @@
 </head>
 
 <body>
+	<fmt:bundle basename="formsConsulta">
 	<div align="center">
-		<h1>Marcar consulta</h1>
+
+		<h1><fmt:message key="titulo"/></h1>
 	</div>
+	</fmt:bundle>
 	<div align="center">
 				<form action="/SistemaConsultas/cliente/marcarConsulta" method="get">
 					<%@include file="campos_consulta.jsp"%>
 				</form>
 	</div>
+
 	<c:if test="${!empty requestScope.mensagens}">
 		<ul class="erro">
 			<c:forEach items="${requestScope.mensagens}" var="mensagem">

@@ -2,17 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <table border="1">
  	<c:if test="${profissional != null}">
    		<input type="hidden" name="id" value="${profissional.getId()}" />
    	</c:if>
+   	<fmt:bundle basename="formsConsulta">
    	<tr>
-   		<td><label for="data">Data escolhida</label></td>
+   		<td><label for="data"><fmt:message key="dataescolhida"/></label></td>
    		<td><input type="date" id="data" name="data" size="55"
    			required value="" /></td>
    	</tr>
 		<tr>
-   		<td><label for="horario">Horário escolhido</label></td>
+   		<td><label for="horario"><fmt:message key="marcarhorario"/></label></td>
    		<td>
 				<select name="horario">
 					<option value="09:00:00" selected>09:00</option>
@@ -29,10 +32,11 @@
 		</td>
    	</tr>
 		<tr>
-   		<td><label for="data">Videoconferência</label></td>
+   		<td><label for="data"><fmt:message key="videoconferencia"/></label></td>
    		<td><input type="text" id="videoconferencia" name="videoconferencia" required value="" /></td>
    	</tr>
    	<tr>
    		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>
    	</tr>
+   	</fmt:bundle>
 </table>
