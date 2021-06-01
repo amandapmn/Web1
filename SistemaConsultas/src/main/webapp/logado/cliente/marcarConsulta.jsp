@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<html lang="pt-BR">
 <head>
 <title>Consulta.me</title>
 </head>
@@ -12,18 +13,16 @@
 		<h1>Marcar consulta</h1>
 	</div>
 	<div align="center">
-		<c:choose>
-			<c:when test="${consulta != null}">
-				<form action="/SistemaConsultas/admin/horarios_consultas" method="get">
+				<form action="/SistemaConsultas/cliente/marcarConsulta" method="get">
 					<%@include file="campos_consulta.jsp"%>
 				</form>
-			</c:when>
-		</c:choose>
 	</div>
 	<c:if test="${!empty requestScope.mensagens}">
 		<ul class="erro">
 			<c:forEach items="${requestScope.mensagens}" var="mensagem">
-				<li>${mensagem}</li>
+				<fmt:bundle basename="formerrors">
+				<li><fmt:message key="${mensagem}"/></li>
+				</fmt:bundle>
 			</c:forEach>
 		</ul>
 	</c:if>

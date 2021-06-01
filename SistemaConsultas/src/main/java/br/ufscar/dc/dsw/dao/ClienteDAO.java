@@ -132,4 +132,32 @@ public class ClienteDAO extends GenericDAO {
         }
         return cliente;
     }
+
+    public Cliente getByUsuario(Usuario usuario) {
+        Cliente cliente = null;
+
+        String sql = "SELECT * from cliente where id_usuario = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, usuario.getId());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+              Long id = resultSet.getLong("id");
+              String telefone =  resultSet.getString("telefone");
+              String sexo = resultSet.getString("sexo");
+              String dataNasc =  resultSet.getString("data_nasc");
+              cliente = new Cliente(id, usuario, telefone, sexo, dataNasc);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cliente;
+    }
 }

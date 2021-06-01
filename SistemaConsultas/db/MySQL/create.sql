@@ -39,6 +39,7 @@ CREATE TABLE consulta (
   data_horario DATETIME NOT NULL,
   id_profissional BIGINT UNSIGNED,
   id_cliente BIGINT UNSIGNED,
+  videoconferencia VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (id_profissional) REFERENCES profissional(id),
   FOREIGN KEY (id_cliente) REFERENCES cliente(id)

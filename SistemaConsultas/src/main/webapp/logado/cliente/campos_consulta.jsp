@@ -3,38 +3,34 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <table border="1">
- 	<c:if test="${consulta != null}">
-   		<input type="hidden" name="id" value="${consulta.getId()}" />
+ 	<c:if test="${profissional != null}">
+   		<input type="hidden" name="id" value="${profissional.getId()}" />
    	</c:if>
-   	<tr>
-   		<td><label for="primeiroNome">Nome do Cliente</label></td>
-   		<td><input type="text" id="primeiroNome" name="primeiroNome" size="45"
-   			required value="${cliente.getUsuario().getPrimeiroNome()}" /></td>
-   	</tr>
-   	<tr>
-   		<td><label for="sobrenome">Sobrenome do Cliente</label></td>
-   		<td><input type="text" id="sobrenome" name="sobrenome" size="45" required
-   			value="${cliente.getUsuario().getSobrenome()}" /></td>
-   	</tr>
-   	<tr>
-   		<td><label for="primeiroNome_prof">Nome do Profissional</label></td>
-   		<td><input type="text" id="primeiroNome_prof" name="primeiroNome_prof" size="55"
-   			required value="${profissional.getUsuario().getNome()}" /></td>
-   	</tr>
-		<tr>
-   		<td><label for="sobrenome_prof">Sobrenome do Profissional</label></td>
-   		<td><input type="text" id="sobrenome_prof" name="sobrenome_prof" size="55"
-   			required value="${profissional.getUsuario().getSobrenome()}" /></td>
-   	</tr>
    	<tr>
    		<td><label for="data">Data escolhida</label></td>
    		<td><input type="date" id="data" name="data" size="55"
-   			required value="${consulta.getData()}" /></td>
+   			required value="" /></td>
    	</tr>
 		<tr>
    		<td><label for="horario">Horário escolhido</label></td>
-   		<td><input type="radio" id="horario" name="horario" size="55"
-   			required value="${consulta.getHorario()}" /></td>
+   		<td>
+				<select name="horario">
+					<option value="09:00:00" selected>09:00</option>
+					<option value="10:00:00">10:00</option>
+					<option value="11:00:00">11:00</option>
+					<option value="12:00:00">12:00</option>
+					<option value="13:00:00">13:00</option>
+					<option value="14:00:00">14:00</option>
+					<option value="15:00:00">15:00</option>
+					<option value="16:00:00">16:00</option>
+					<option value="17:00:00">17:00</option>
+					<option value="18:00:00">18:00</option>
+				</select>
+		</td>
+   	</tr>
+		<tr>
+   		<td><label for="data">Videoconferência</label></td>
+   		<td><input type="text" id="videoconferencia" name="videoconferencia" required value="" /></td>
    	</tr>
    	<tr>
    		<td colspan="2" align="center"><input type="submit" value="Salva" /></td>

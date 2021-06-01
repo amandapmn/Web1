@@ -1,10 +1,14 @@
 package br.ufscar.dc.dsw.domain;
+import br.ufscar.dc.dsw.domain.Cliente;
+import br.ufscar.dc.dsw.domain.Profissional;
 
 public class Consulta {
 
     private Long id;
     private String dataHorario;
     private String videoconferencia;
+    private Cliente cliente;
+    private Profissional profissional;
 
     public Consulta(Long id) {
         this.id = id;
@@ -38,5 +42,21 @@ public class Consulta {
 
     public void setVideoconferencia(String videoconferencia) {
         this.videoconferencia = videoconferencia;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Profissional getProfissional() {
+        return profissional;
+    }
+
+    public void setProfissional(Profissional profissional) {
+        this.profissional = profissional;
     }
 }
