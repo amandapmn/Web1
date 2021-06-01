@@ -11,9 +11,6 @@
         <p>Olá ${sessionScope.usuarioLogado.primeiroNome}</p>
         <ul>
             <li>
-                <a href="/SistemaConsultas/admin/usuarios">Usuarios</a>
-            </li>
-            <li>
                 <a href="/SistemaConsultas/admin/clientes">Clientes</a>
             </li>
             <li>
