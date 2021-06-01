@@ -76,7 +76,7 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
       request.getSession().setAttribute("usuarioLogado", null);
       request.getSession().invalidate();
-      RequestDispatcher rd = request.getRequestDispatcher("/logout.jsp");
+      RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
       rd.forward(request, response);
     }
 
@@ -106,7 +106,7 @@ public class IndexController extends HttpServlet {
     							response.sendRedirect("/SistemaConsultas/cliente/");
     						}
                 else if (usuario.getPapel().equals("PROFISSIONAL")){
-                  response.sendRedirect("/SistemaConsultas/cliente/");
+                  response.sendRedirect("/SistemaConsultas/profissional/");
                 }
     						return;
     					} else {

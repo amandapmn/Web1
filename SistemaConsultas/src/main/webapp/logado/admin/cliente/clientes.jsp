@@ -9,8 +9,8 @@
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
-
 	<div align="center">
+		<h3><a href="SistemaConsultas/admin/clientes_criacao">Adicionar cliente</a></h3>
 		<table border="1">
 			<caption>Lista de Clientes</caption>
 			<tr>

@@ -14,13 +14,30 @@
 		<table border="1">
 			<caption>Lista de Profissionais</caption>
 			<tr>
-				<th>Nome completo</th>
+				<th>ID</th>
+				<th>Email</th>
+				<th>Primeiro Nome</th>
+				<th>Sobrenome</th>
 				<th>Especialidade</th>
+        <th>Qualificações</th>
+				<c:if test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
+				<th>Marcar Consulta</th>
+				</c:if>
 			</tr>
 			<c:forEach var="profissional" items="${requestScope.listaProfissionais}">
 				<tr>
-          <td>${profissional.getUsuario().primeiro_nome + " " + profissional.getUsuario().sobrenome }</td>
-          <td>${profissional.especialidade}</td>
+				<td>${profissional.getId()}</td>
+		        <td>${profissional.getUsuario().email}</td>
+		        <td>${profissional.getUsuario().primeiroNome}</td>
+		        <td>${profissional.getUsuario().sobrenome}</td>
+		        <td>${profissional.especialidade}</td>
+		        <td>${profissional.qualificacoes}</td>
+						<c:if test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
+						<td>
+							 <a href="/SistemaConsultas/cliente/marcarConsulta?id=${profissional.getId()}"
+							 onclick="return confirm('Deseja marcar uma consulta?');">Marcar Consulta</a>
+					 	</td>
+					  </c:if>
 				</tr>
 			</c:forEach>
 		</table>

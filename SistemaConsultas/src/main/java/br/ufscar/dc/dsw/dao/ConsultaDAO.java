@@ -120,7 +120,6 @@ public class ConsultaDAO extends GenericDAO {
               String videoconferencia =  resultSet.getString("videoconferencia");
               Long idCliente =  resultSet.getLong("id_cliente");
 
-
               Consulta consulta = new Consulta(id, dataHorario, videoconferencia);
               consulta.setCliente(clienteDAO.get(idCliente));
               listaConsultas.add(consulta);

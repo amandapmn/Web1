@@ -139,7 +139,8 @@ public class ClienteController extends HttpServlet {
       ProfissionalDAO dao = new ProfissionalDAO();
       List<Profissional> listaProfissionais = dao.getAll();
       request.setAttribute("listaProfissionais", listaProfissionais);
-      RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/cliente/profissionais.jsp");
+      request.setAttribute("usuarioLogado", request.getSession().getAttribute("usuarioLogado"));
+      RequestDispatcher dispatcher = request.getRequestDispatcher("/listaProfissionais.jsp");
       dispatcher.forward(request, response);
 
     }

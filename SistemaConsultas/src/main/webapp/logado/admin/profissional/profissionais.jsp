@@ -11,6 +11,7 @@
 	%>
 
 	<div align="center">
+		<h3><a href="SistemaConsultas/admin/profissionais_criacao">Adicionar profissionais</a></h3>
 		<table border="1">
 			<caption>Lista de Profissionais</caption>
 			<tr>
@@ -19,9 +20,9 @@
 				<th>Primeiro Nome</th>
 				<th>Sobrenome</th>
 				<th>Especialidade</th>
-        		<th>Qualificações</th>
-        		<th>Editar</th>
-        		<th>Excluir</th>
+      	<th>Qualificações</th>
+      	<th>Editar</th>
+      	<th>Excluir</th>
 			</tr>
 			<c:forEach var="profissional" items="${requestScope.listaProfissionais}">
 				<tr>
@@ -36,11 +37,6 @@
 					<a href="/SistemaConsultas/admin/profissionais_remocao?id=${profissional.getId()}"
 					onclick="return confirm('Deseja confirmar a exclusão?');">Excluir</a></td>
 				</tr>
-			<h2>
-				<a href="/<%=contextPath%>"></a>
-				&nbsp;&nbsp;&nbsp; <a href="/<%=contextPath%>/profissional/cadastro">
-				</a>
-			</h2>
 			</c:forEach>
 		</table>
 	</div>
