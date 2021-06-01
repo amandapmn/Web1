@@ -24,11 +24,11 @@ public class IndexController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private ProfissionalDAO profissionalDao;
+    private ProfissionalDAO profissionalDAO;
 
     @Override
     public void init() {
-      profissionalDao = new ProfissionalDAO();
+      profissionalDAO = new ProfissionalDAO();
     }
 
     @Override
@@ -66,7 +66,14 @@ public class IndexController extends HttpServlet {
 
     private void listaProfissionais(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Profissional> listaProfissionais = profissionalDao.getAll();
+        List<Profissional> listaProfissionais;
+        if(request.getParameter("opcao") != null && Integer.parseInt(request.getParameter("opcao")) == 1){
+          String especialidade =  request.getParameter("especialidade");
+          listaProfissionais = profissionalDAO.getAllEspecialidade(especialidade);
+        }
+        else{
+          listaProfissionais = profissionalDAO.getAll();
+        }
         request.setAttribute("listaProfissionais", listaProfissionais);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listaProfissionais.jsp");
         dispatcher.forward(request, response);

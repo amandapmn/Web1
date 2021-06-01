@@ -9,6 +9,25 @@
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
+		<form action="/SistemaConsultas/publico/listaClientes" method="get">
+			<input id="todas" type="radio" name="opcao" value="0" checked='checked'>Todas as especialidades<br>
+			<input id="pesquisar" type="radio" name="opcao" value="1">Pesquisar <br>
+			<div id="especialidade">
+	       	<b>Escreva a especialidade</b> <br><input type="text" name="especialidade"><br><br>
+			</div>
+			<input type="submit" value="Filtrar">
+		</form>
+		<script>
+		document.getElementById("especialidade").style.display = "none";
+
+		document.getElementById("pesquisar").onclick = function () {
+      document.getElementById("especialidade").style.display = "block";
+    };
+
+		document.getElementById("todas").onclick = function () {
+			document.getElementById("especialidade").style.display = "none";
+    };
+		</script>
 
 	<div align="center">
 		<table border="1">

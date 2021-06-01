@@ -96,7 +96,7 @@ public class ProfissionalDAO extends GenericDAO {
               String especialidade = resultSet.getString("especialidade");
               String qualificacoes = resultSet.getString("qualificacoes");
               Profissional profissional = new Profissional(id, usuario, especialidade, qualificacoes);
-                listaProfissionais.add(profissional);
+              listaProfissionais.add(profissional);
             }
 
             resultSet.close();
@@ -160,5 +160,33 @@ public class ProfissionalDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
         return profissional;
+    }
+
+    public List<Profissional> getAllEspecialidade(String especialidade) {
+        List<Profissional> listaProfissionais = new ArrayList<>();
+
+        String sql = "SELECT * from profissional where especialidade = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, especialidade);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+              Long id = resultSet.getLong("id");
+              Usuario usuario = usuarioDAO.get(resultSet.getLong("id_usuario"));
+              String qualificacoes = resultSet.getString("qualificacoes");
+              Profissional profissional = new Profissional(id, usuario, especialidade, qualificacoes);
+              listaProfissionais.add(profissional);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaProfissionais;
     }
 }
