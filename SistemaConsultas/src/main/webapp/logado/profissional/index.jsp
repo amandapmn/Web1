@@ -19,7 +19,7 @@
                 <a href="/SistemaConsultas/profissional/listaConsultas"><fmt:message key="minhas_consultas"/></a>
             </li>
             <li>
-                <a href="/SistemaConsultas/publico/logout"><fmt:message key="sair"/>Sair</a>
+                <a href="/SistemaConsultas/publico/logout"><fmt:message key="sair"/></a>
             </li>
 
         </ul>
