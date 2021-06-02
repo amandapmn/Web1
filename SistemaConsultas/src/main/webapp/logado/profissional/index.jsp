@@ -16,7 +16,7 @@
         <p><fmt:message key="ola"/> ${sessionScope.usuarioLogado.primeiroNome}</p>
         <ul>
             <li>
-                <a href="/SistemaConsultas/profissional/listaConsultas"><fmt:message key="minhas_consultas"/></a>
+                <a href="/SistemaConsultas/profissional/minhasConsultas"><fmt:message key="minhas_consultas"/></a>
             </li>
             <li>
                 <a href="/SistemaConsultas/publico/logout"><fmt:message key="sair"/></a>
