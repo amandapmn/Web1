@@ -152,7 +152,7 @@ public class ProfissionalDAO extends GenericDAO {
     public List<Profissional> getAllEspecialidade(String especialidade) {
         List<Profissional> listaProfissionais = new ArrayList<>();
 
-        String sql = "SELECT * from profissional where especialidade = ?";
+        String sql = "SELECT * from profissional where especialidade like ?";
 
         try {
             Connection conn = this.getConnection();
