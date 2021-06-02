@@ -117,10 +117,10 @@ public class IndexController extends HttpServlet {
                 }
     						return;
     					} else {
-    						erros.add("Senha inválida!");
+    						erros.add("invalid_password");
     					}
     				} else {
-    					erros.add("Usuário não encontrado!");
+    					erros.add("user_notFound");
     				}
     			}
     		}

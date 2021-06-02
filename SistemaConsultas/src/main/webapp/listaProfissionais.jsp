@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
-<head>
-<title>Lista de Profissionais</title>
-</head>
+	<fmt:bundle basename="formsInicio">
+	<title><fmt:message key="listaprof"/></title>
+	</fmt:bundle>
 <body>
+	<fmt:bundle basename="formsInicio">
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
@@ -15,12 +17,12 @@
 		<%@include file="/menu.jsp"%>
 
 		<form action="/SistemaConsultas/publico/listaClientes" method="get">
-			<input id="todas" type="radio" name="opcao" value="0" checked='checked'>Todas as especialidades<br>
-			<input id="pesquisar" type="radio" name="opcao" value="1">Pesquisar <br>
+			<input id="todas" type="radio" name="opcao" value="0" checked='checked'><th><fmt:message key="todas_especialidades"/></th><br>
+			<input id="pesquisar" type="radio" name="opcao" value="1"><th><fmt:message key="pesquisar"/></th><br>
 			<div id="especialidade">
-	       	<b>Escreva a especialidade</b> <br><input type="text" name="especialidade"><br><br>
+	       	<b><th><fmt:message key="digite_especialidade"/></th></b> <br><input type="text" name="especialidade"><br><br>
 			</div>
-			<input type="submit" value="Filtrar">
+			<input type="submit" value='<fmt:message key="filtrar"/>'>
 		</form>
 		<script>
 		document.getElementById("especialidade").style.display = "none";
@@ -35,17 +37,17 @@
 		</script>
 
 		<table border="1">
-			<caption>Lista de Profissionais</caption>
+			<caption><fmt:message key="listaprof"/></caption>
 			<tr>
-				<th>ID</th>
-				<th>Email</th>
-				<th>Primeiro Nome</th>
-				<th>Sobrenome</th>
-				<th>Especialidade</th>
-        <th>Qualificações</th>
+				<th><fmt:message key="id"/></th>
+				<th><fmt:message key="email"/></th>
+				<th><fmt:message key="primeiro_nome"/></th>
+				<th><fmt:message key="sobrenonome"/></th>
+				<th><fmt:message key="especialidade"/></th>
+				<th><fmt:message key="qualificacoes"/></th>
 
 				<c:if test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
-				<th>Marcar Consulta</th>
+					<th><fmt:message key="marcar_consulta"/></th>
 				</c:if>
 			</tr>
 			<c:forEach var="profissional" items="${requestScope.listaProfissionais}">
@@ -58,13 +60,14 @@
 		        <td>${profissional.qualificacoes}</td>
 						<c:if test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
 						<td>
-							 <a href="/SistemaConsultas/cliente/marcarConsulta?id=${profissional.getId()}"
-							 onclick="return confirm('Deseja marcar uma consulta?');">Marcar Consulta</a>
+							 <a href="/SistemaConsultas/cliente/marcarConsulta?id=${profissional.getId()}">
+								 <th><fmt:message key="marcar_consulta"/></th></a>
 					 	</td>
 					  </c:if>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
+	</fmt:bundle>
 </body>
 </html>

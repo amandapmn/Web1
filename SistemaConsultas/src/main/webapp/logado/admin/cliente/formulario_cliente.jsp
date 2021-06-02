@@ -2,16 +2,18 @@
 	pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>Consulta.me</title>
 </head>
 
 <body>
+	<fmt:bundle basename="formsadmin">
 	<div align="center">
-		<h1>Gerenciamento de clientes</h1>
+		<h1><fmt:message key="gerenciarclientes"/></h1>
 		<h2>
-			<a href="clientes">Lista de clientes</a>
+			<a href="clientes"><fmt:message key="listaclientes"/></a>
 		</h2>
 	</div>
 	<div align="center">
@@ -31,9 +33,12 @@
 	<c:if test="${!empty requestScope.mensagens}">
 		<ul class="erro">
 			<c:forEach items="${requestScope.mensagens}" var="mensagem">
-				<li>${mensagem}</li>
+			<fmt:bundle basename="formerrors">
+				<li><fmt:message key="${mensagem}"/></li>
+			</fmt:bundle>
 			</c:forEach>
 		</ul>
 	</c:if>
+	</fmt:bundle>
 </body>
 </html>

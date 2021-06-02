@@ -3,21 +3,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>Minhas consultas</title>
+<fmt:bundle basename="profissional">
+<title><fmt:message key="minhas_consultas"/></title>
+</fmt:bundle>
 </head>
 <body>
 	<%
 		String contextPath = request.getContextPath().replace("/", "");
 	%>
-
+	<fmt:bundle basename="profissional">
 	<div align="center">
 		<table border="1">
-			<caption>Minhas consultas</caption>
+			<caption><fmt:message key="minhas_consultas"/></caption>
 			<tr>
-				<th>Nome do cliente</th>
-        <th>CPF</th>
-        <th>Email</th>
-				<th>Dia/Horário</th>
+				<th><fmt:message key="nome"/></th>
+        <th><fmt:message key="cpf"/></th>
+        <th><fmt:message key="email"/></th>
+				<th><fmt:message key="dia_horario"/></th>
 			</tr>
 			<c:forEach var="consulta" items="${requestScope.listaConsultas}">
 				<tr>
@@ -29,5 +31,6 @@
 			</c:forEach>
 		</table>
 	</div>
+	</fmt:bundle>
 </body>
 </html>

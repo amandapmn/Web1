@@ -23,7 +23,12 @@ public class EmailService {
 		try {
 
 			Properties prop = new Properties();
-			InputStream is = new FileInputStream("src/main/resources/config.properties");
+			String dir = System.getProperty("user.dir");
+			InputStream is = new FileInputStream("/home/nathan/Documents/DSW1/fix/Web1/SistemaConsultas/src/main/resources/config.properties");
+
+		  // directory from where the program was launched
+		  // e.g /home/mkyong/projects/core-java/java-io
+		  System.out.println("\n\n\n\nUsuario: " + dir);
 
 			if (is != null) {
 				prop.load(is);

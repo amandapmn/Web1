@@ -5,15 +5,15 @@
 
 <c:choose>
 <c:when test='${usuarioLogado != null && usuarioLogado.getPapel() == "CLIENTE"}'>
-  <h3><a href="/SistemaConsultas/cliente/index">Voltar para home</a></h3>
+  <h3><a href="/SistemaConsultas/cliente/index">Home</a></h3>
 </c:when>
 <c:when test='${usuarioLogado != null && usuarioLogado.getPapel() == "PROFISSIONAL"}'>
-  <h3><a href="/SistemaConsultas/profissional/index">Voltar para home</a></h3>
+  <h3><a href="/SistemaConsultas/profissional/index">Home</a></h3>
 </c:when>
 <c:when test='${usuarioLogado != null && usuarioLogado.getPapel() == "ADMIN"}'>
-  <h3><a href="/SistemaConsultas/admin/index">Voltar para home</a></h3>
+  <h3><a href="/SistemaConsultas/admin/index">Home</a></h3>
 </c:when>
 <c:otherwise>
-  <h3><a href="/SistemaConsultas/">Voltar para home</a></h3>
+  <h3><a href="/SistemaConsultas/">Home</a></h3>
 </c:otherwise>
 </c:choose>
