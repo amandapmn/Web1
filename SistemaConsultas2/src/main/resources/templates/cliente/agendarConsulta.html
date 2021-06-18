@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><i class="oi oi-caret-right"></i>
+						<span th:text="#{consultas.agendar.label}"></span></li>
+				</ul>
+				<a class="btn btn-primary btn-md" th:href="@{/cliente/minhasConsultas}"
+					role="button"> <span class="oi oi-spreadsheet" title="Listar"
+					aria-hidden="true"></span> <span th:text="#{consultas.listar.label}"></span>
+				</a>
+			</div>
+		</nav>
+
+		<div class="container" id="cadastro">
+
+			<div th:replace="fragments/alert"></div>
+
+			<form
+				th:action="@{/cliente/salvarConsulta}"
+				th:object="${consulta}" method="POST">
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label th:text="#{consultas.cpfCliente.label}" for="cpfCliente"></label>
+						<input type="text" class="form-control" id="cpfCliente" autofocus="autofocus"
+							th:field="*{cpfCliente}" th:placeholder="#{placeholder.cpf}"
+							data-mask="000.000.000-00" data-mask-reverse="true"
+							th:classappend="${#fields.hasErrors('cpfCliente')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{cpfCliente}"></span>
+						</div>
+					</div>
+
+          <div class="form-group col-md-6">
+						<label th:text="#{consultas.cpfProfissional.label}" for="cpfProfissional"></label>
+						<input type="text" class="form-control" id="cpfProfissional" autofocus="autofocus"
+							th:field="*{cpfProfissional}" th:placeholder="#{placeholder.cpf}"
+							data-mask="000.000.000-00" data-mask-reverse="true"
+							th:classappend="${#fields.hasErrors('cpfProfissional')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{cpfProfissional}"></span>
+						</div>
+					</div>
+
+
+					<div class="form-group col-md-6">
+						<label th:text="#{consultas.data.label}" for="data"></label>
+						<input type="text" class="form-control" id="data" autofocus="autofocus"
+							th:field="*{data}" th:placeholder="#{placeholder.data}"
+							data-mask="00/00/0000" data-mask-reverse="true"
+							th:classappend="${#fields.hasErrors('data')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{data}"></span>
+						</div>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label th:text="#{consultas.horario.label}" for="data"></label>
+						<select th:field="*{horario}">
+							<option th:value="${'09:00:00'}" th:text="${'09:00:00'}" selected></option>
+							<option th:value="${'10:00:00'}" th:text="${'10:00:00'}"></option>
+							<option th:value="${'11:00:00'}" th:text="${'11:00:00'}"></option>
+							<option th:value="${'12:00:00'}" th:text="${'12:00:00'}"></option>
+							<option th:value="${'13:00:00'}" th:text="${'13:00:00'}"></option>
+							<option th:value="${'14:00:00'}" th:text="${'14:00:00'}"></option>
+							<option th:value="${'15:00:00'}" th:text="${'15:00:00'}"></option>
+							<option th:value="${'16:00:00'}" th:text="${'16:00:00'}"></option>
+							<option th:value="${'17:00:00'}" th:text="${'17:00:00'}"></option>
+							<option th:value="${'18:00:00'}" th:text="${'18:00:00'}"></option>
+						</select>
+					</div>
+
+          <div class="form-group col-md-6">
+						<label th:text="#{consultas.videoconferencia.label}" for="videoconferencia"></label>
+						<input type="text" class="form-control" id="videoconferencia" autofocus="autofocus"
+							th:field="*{videoconferencia}" th:placeholder="#{consultas.videoconferencia.label}"
+							th:classappend="${#fields.hasErrors('videoconferencia')} ? is-invalid" />
+
+						<div class="invalid-feedback">
+							<span th:errors="*{videoconferencia}"></span>
+						</div>
+					</div>
+
+				</div>
+				<button type="submit" th:text="#{button.salvar.label}"
+					class="btn btn-primary btn-sm"></button>
+			</form>
+		</div>
+	</section>
+</body>
+</html>

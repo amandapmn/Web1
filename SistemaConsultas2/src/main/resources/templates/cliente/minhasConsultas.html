@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+	<section class="layout-content" layout:fragment="corpo">
+
+		<nav class="navbar navbar-expand-md bg-light">
+			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<i class="oi oi-caret-right"></i>
+						<span th:text="#{consultas.listar.label}"></span>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container" id="listagem">
+
+			<div th:replace="fragments/alert"></div>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-sm">
+					<thead>
+						<tr>
+              <th th:text="#{consultas.dataHorario.label}"></th>
+							<th th:text="#{consultas.emailProfissional.label}"></th>
+							<th th:text="#{consultas.cpfProfissional.label}"></th>
+							<th th:text="#{consultas.primeiroNomeProfissional.label}"></th>
+							<th th:text="#{consultas.sobrenomeProfissional.label}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="consulta : ${consultas}">
+							<td th:text="${consulta.dataHorario}"></td>
+							<td th:text="${consulta.getProfissional().email}"></td>
+							<td th:text="${consulta.getProfissional().cpf}"></td>
+							<td th:text="${consulta.getProfissional().primeiroNome}"></td>
+							<td th:text="${consulta.getProfissional().sobrenome}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div th:replace="fragments/modal :: modal"></div>
+	</section>
+</body>
+</html>
