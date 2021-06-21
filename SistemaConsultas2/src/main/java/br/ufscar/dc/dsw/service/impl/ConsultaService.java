@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.service.impl;
 
 import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,10 @@ public class ConsultaService implements IConsultaService {
 	@Transactional(readOnly = true)
 	public List<Consulta> buscarPorCliente(Cliente cliente) {
 		return dao.findByCliente(cliente);
+	}
+
+	public Boolean consultaExiste(Date dataHorario, Profissional profissional) {
+		return dao.getConsultaByDataHorarioAndProfissional(dataHorario, profissional) == null;
 	}
 
 }

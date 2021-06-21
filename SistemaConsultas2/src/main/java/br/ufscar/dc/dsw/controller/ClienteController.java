@@ -66,16 +66,29 @@ public class ClienteController {
   @PostMapping("/salvarConsulta")
 	public String salvarConsulta(@Valid Consulta consulta, BindingResult result, RedirectAttributes attr) {
     try {
-  		if (result.hasErrors()) {
-  			return "cliente/agendarConsulta";
-  		}
+      Date data = new SimpleDateFormat("dd/MM/yyyyHH:mm:ss").parse(consulta.getData() + consulta.getHorario());
 
-      consulta.setCliente(clienteService.buscarPorCpf(consulta.getCpfCliente()));
-      consulta.setProfissional(profissionalService.buscarPorCpf(consulta.getCpfProfissional()));
-      Date data = data = new SimpleDateFormat("dd/MM/yyyyHH:mm:ss").parse(consulta.getData() + consulta.getHorario());
+      Cliente cliente = clienteService.buscarPorCpf(consulta.getCpfCliente());
+      Profissional profissional = profissionalService.buscarPorCpf(consulta.getCpfProfissional());
+
+      consulta.setCliente(cliente);
+      consulta.setProfissional(profissional);
       consulta.setDataHorario(data);
-  		consultaService.salvar(consulta);
-  		attr.addFlashAttribute("sucess", "Consulta agendada com sucesso.");
+
+      if(cliente == null){
+        attr.addFlashAttribute("fail", "Não há um cliente com este CPF");
+      }
+      else if(profissional == null){
+        attr.addFlashAttribute("fail", "Não há um profissional com este CPF");
+      }
+      else if (consultaService.consultaExiste(data, profissional) == true){
+        attr.addFlashAttribute("fail", "Já existe uma consulta agendada neste horário");
+      }
+
+      if(cliente == null && profissional == null && consultaService.consultaExiste(data, profissional) == false){
+        consultaService.salvar(consulta);
+        attr.addFlashAttribute("sucess", "Consulta agendada com sucesso.");
+      }
   		return "redirect:/cliente/minhasConsultas";
     }
     catch (Exception e) {
