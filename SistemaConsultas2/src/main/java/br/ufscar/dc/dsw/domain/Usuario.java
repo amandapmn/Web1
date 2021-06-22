@@ -19,27 +19,26 @@ public class Usuario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message="{NotBlank.usuario.email}")
+	@NotBlank(message="#{NotBlank.usuario.email}")
 	@Column(nullable = false, unique = true, length = 254)
 	private String email;
 
-	@NotBlank(message="{NotBlank.usuario.senha}")
+	@NotBlank(message="#{NotBlank.usuario.senha}")
 	@Column(nullable = false, unique = false, length = 1024)
 	private String senha;
 
-	@NotBlank(message="{NotBlank.usuario.cpf}")
+	@NotBlank(message="#{NotBlank.usuario.cpf}")
 	@Column(nullable = false, unique = true, length = 14)
 	private String cpf;
 
-	@NotBlank(message="{NotBlank.usuario.primeiroNome}")
+	@NotBlank(message="#{NotBlank.usuario.primeiroNome}")
 	@Column(nullable = false, unique = false, length = 255)
 	private String primeiroNome;
 
-	@NotBlank(message="{NotBlank.usuario.sobrenome}")
+	@NotBlank(message="#{NotBlank.usuario.sobrenome}")
 	@Column(nullable = false, unique = false, length = 512)
 	private String sobrenome;
 
-	@NotBlank
 	@Column(nullable = false, unique = false, length = 128)
 	private String papel;
 
