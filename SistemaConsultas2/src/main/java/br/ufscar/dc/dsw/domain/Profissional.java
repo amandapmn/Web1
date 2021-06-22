@@ -33,7 +33,7 @@ public class Profissional extends Usuario {
 	public Profissional(String email, String senha, String cpf, String primeiroNome,
    String sobrenome, String papel, String especialidade, String qualificacoes) {
 		super(email, senha, cpf, primeiroNome, sobrenome, papel);
-    this.especialidade = especialidade;
+		this.especialidade = especialidade;
 		this.qualificacoes = qualificacoes;
 	}
 

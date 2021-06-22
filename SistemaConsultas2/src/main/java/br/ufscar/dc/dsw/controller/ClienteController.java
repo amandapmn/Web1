@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import javax.validation.Valid;
+import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,10 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
+import br.ufscar.dc.dsw.service.EmailService;
 import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.Consulta;
@@ -29,13 +27,12 @@ import br.ufscar.dc.dsw.security.UsuarioDetails;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
+
+import javax.mail.internet.InternetAddress;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
-  private static final Logger log = LoggerFactory.getLogger(ClienteController.class);
 
 	@Autowired
 	private IConsultaService consultaService;
@@ -46,6 +43,9 @@ public class ClienteController {
   @Autowired
 	private IProfissionalService profissionalService;
 
+  @Autowired
+	private EmailService emailService;
+
   private Usuario getUsuario() {
   		UsuarioDetails usuarioDetails = (UsuarioDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       return usuarioDetails.getUsuario();
@@ -54,7 +54,6 @@ public class ClienteController {
 	@GetMapping("/minhasConsultas")
 	public String minhasConsultas(ModelMap model) {
 		model.addAttribute("consultas", consultaService.buscarPorCliente((Cliente) this.getUsuario()));
-    log.info(this.getUsuario().toString());
 		return "cliente/minhasConsultas";
 	}
 
@@ -75,6 +74,7 @@ public class ClienteController {
       consulta.setProfissional(profissional);
       consulta.setDataHorario(data);
 
+
       if(cliente == null){
         attr.addFlashAttribute("fail", "Não há um cliente com este CPF");
       }
@@ -85,14 +85,42 @@ public class ClienteController {
         attr.addFlashAttribute("fail", "Já existe uma consulta agendada neste horário");
       }
 
-      if(cliente == null && profissional == null && consultaService.consultaExiste(data, profissional) == false){
+      if(cliente != null && profissional != null && consultaService.consultaExiste(data, profissional) == false){
         consultaService.salvar(consulta);
         attr.addFlashAttribute("sucess", "Consulta agendada com sucesso.");
+
+  		InternetAddress from = new InternetAddress("dsw1sistemaconsultas@gmail.com", "SistemaConsultas");
+  		InternetAddress to1 = new InternetAddress(consulta.getCliente().getEmail(),
+       consulta.getCliente().getPrimeiroNome());
+  		InternetAddress to2 = new InternetAddress(consulta.getProfissional().getEmail(),
+       consulta.getProfissional().getPrimeiroNome());
+
+  		String subject1 = "Consulta.me: Consulta marcada com sucesso!";
+  		String subject2 = "Consulta.me: Nova consulta marcada";
+
+  		String body1 = "Consulta agendada com sucesso. Segue informações:"
+  				+ "Profissional: " + consulta.getProfissional().getPrimeiroNome()
+          + " " + consulta.getProfissional().getSobrenome()
+  				+ "Especialidade: " + consulta.getProfissional().getEspecialidade()
+  				+ "Data e horário: " + consulta.getDataHorario()
+  				+ "Link da consulta: " + consulta.getVideoconferencia();
+
+  		String body2 = "Nova consulta agendada. Segue informações:"
+  				+ "Cliente: " + consulta.getCliente().getPrimeiroNome()
+          + " " + consulta.getCliente().getSobrenome()
+  				+ "Data e horário: " + consulta.getDataHorario()
+  				+ "Link da consulta: " + consulta.getVideoconferencia();
+
+  		// Envio cliente
+  		emailService.send(from, to1, subject1, body1);
+
+  		// Envio profissional
+  		emailService.send(from, to2, subject2, body2);
       }
   		return "redirect:/cliente/minhasConsultas";
     }
     catch (Exception e) {
-      JOptionPane.showMessageDialog(null, "Parsing Error");
+      e.printStackTrace();
     }
     return "redirect:/cliente/minhasConsultas";
 	}

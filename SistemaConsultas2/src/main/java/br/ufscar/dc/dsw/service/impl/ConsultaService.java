@@ -35,7 +35,7 @@ public class ConsultaService implements IConsultaService {
 	}
 
 	public Boolean consultaExiste(Date dataHorario, Profissional profissional) {
-		return dao.getConsultaByDataHorarioAndProfissional(dataHorario, profissional) == null;
+		return dao.getConsultaByDataHorarioAndProfissional(dataHorario, profissional) != null;
 	}
 
 }
