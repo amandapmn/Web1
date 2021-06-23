@@ -41,7 +41,7 @@ public class SistemaConsultas {
 			Date data1 = new Date();
 
 			Usuario usuario1 = new Usuario("admin@admin.com", encoder.encode("12345678"), "448.992.758-45", "Admin", "Admin", "ADMIN");
-			Cliente cliente1 = new Cliente("cliente1@cliente.com", encoder.encode("12345678"), "448.992.758-46", "Matheus", "Freitas", "CLIENTE", "11 99999-9999", "Masculino", "11/11/1111");
+			Cliente cliente1 = new Cliente("nathan.oliveirasc17@gmail.com", encoder.encode("12345678"), "448.992.758-46", "Matheus", "Freitas", "CLIENTE", "11 99999-9999", "Masculino", "11/11/1111");
 			Profissional profissional1 = new Profissional("pro1@pro.com", encoder.encode("12345678"), "448.992.758-47", "João", "Silva", "PROFISSIONAL", "Médico", "Medicina USP");
 			Consulta consulta1 = new Consulta(data1, "dsfsfdssfd", cliente1, profissional1);
 			log.info("Salvando Usuario - Admin");
@@ -55,7 +55,7 @@ public class SistemaConsultas {
 
 			log.info("Salvando Consulta");
 			consultaDAO.save(consulta1);
-			
+
 		};
 	}
 }

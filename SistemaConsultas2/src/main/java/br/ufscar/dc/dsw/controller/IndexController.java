@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Profissional;
@@ -40,9 +41,15 @@ public class IndexController {
 		return "login";
 	}
 
-  @GetMapping("/listaProfissionais")
-	public String listaProfissionais(ModelMap model) {
-    model.addAttribute("profissionais", profissionalService.buscarTodos());
-		return "listaProfissionais";
-	}
+  @GetMapping("/listarProfissionais")
+  public String listaProfissionais(ModelMap model, @RequestParam(value="especialidade", required=false) String especialidade) {
+    if(especialidade == null){
+      model.addAttribute("profissionais", profissionalService.buscarTodos());
+    }
+    else{
+      model.addAttribute("profissionais", profissionalService.buscarPorEspecialidade(especialidade));
+    }
+    return "listaProfissionais";
+  }
+
 }

@@ -18,7 +18,7 @@ public class EmailService {
 	JavaMailSender emailSender;
 
 	public void send(InternetAddress from, InternetAddress to, String subject, String body, File file) {
-
+		
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
