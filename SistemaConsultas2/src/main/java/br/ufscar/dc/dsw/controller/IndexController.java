@@ -43,11 +43,11 @@ public class IndexController {
 
   @GetMapping("/listarProfissionais")
   public String listaProfissionais(ModelMap model, @RequestParam(value="especialidade", required=false) String especialidade) {
-    if(especialidade == null){
+    if(especialidade == null || especialidade == ""){
       model.addAttribute("profissionais", profissionalService.buscarTodos());
     }
     else{
-      model.addAttribute("profissionais", profissionalService.buscarPorEspecialidade(especialidade));
+      model.addAttribute("profissionais", profissionalService.buscarPorEspecialidade(especialidade + "%"));
     }
     return "listaProfissionais";
   }

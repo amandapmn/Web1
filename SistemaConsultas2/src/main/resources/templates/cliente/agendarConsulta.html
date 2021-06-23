@@ -24,7 +24,7 @@
 			<div th:replace="fragments/alert"></div>
 
 			<form
-				th:action="@{/cliente/salvarConsulta}"
+				th:action="@{/cliente/salvarConsulta/} + ${idProfissional}"
 				th:object="${consulta}" method="POST">
 
 				<div class="form-row">

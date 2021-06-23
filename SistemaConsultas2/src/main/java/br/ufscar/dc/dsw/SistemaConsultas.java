@@ -37,12 +37,11 @@ public class SistemaConsultas {
 	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder, IClienteDAO clienteDAO, IProfissionalDAO profissionalDAO, IConsultaDAO consultaDAO) {
 		return (args) -> {
 
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date data1 = new Date();
+			Date data1  = new SimpleDateFormat("dd/MM/yyyyHH:mm:ss").parse("22/08/202109:00:00");
 
-			Usuario usuario1 = new Usuario("admin@admin.com", encoder.encode("12345678"), "448.992.758-45", "Admin", "Admin", "ADMIN");
-			Cliente cliente1 = new Cliente("nathan.oliveirasc17@gmail.com", encoder.encode("12345678"), "448.992.758-46", "Matheus", "Freitas", "CLIENTE", "11 99999-9999", "Masculino", "11/11/1111");
-			Profissional profissional1 = new Profissional("pro1@pro.com", encoder.encode("12345678"), "448.992.758-47", "João", "Silva", "PROFISSIONAL", "Médico", "Medicina USP");
+			Usuario usuario1 = new Usuario("admin@admin.com", encoder.encode("12345678"), "111.111.111-11", "Admin", "Admin", "ADMIN");
+			Cliente cliente1 = new Cliente("nathan.oliveirasc17@gmail.com", encoder.encode("12345678"), "222.222.222-22", "Matheus", "Freitas", "CLIENTE", "11 99999-9999", "Masculino", "11/11/1111");
+			Profissional profissional1 = new Profissional("pro1@pro.com", encoder.encode("12345678"), "333.333.333-33", "João", "Silva", "PROFISSIONAL", "Médico", "Medicina USP");
 			Consulta consulta1 = new Consulta(data1, "dsfsfdssfd", cliente1, profissional1);
 			log.info("Salvando Usuario - Admin");
 			usuarioDAO.save(usuario1);
