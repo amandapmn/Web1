@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "data", "horario", "cpfCliente", "cpfProfissional"})
 @Entity
 @Table(name = "consulta")
-public class Consulta {
+public class Consulta extends AbstractEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

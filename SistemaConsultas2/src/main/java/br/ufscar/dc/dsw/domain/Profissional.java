@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.validation.constraints.NotBlank;
 
 import br.ufscar.dc.dsw.domain.Consulta;
@@ -12,6 +13,7 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@SuppressWarnings("serial")
 @JsonIgnoreProperties(value = { "consultas", "senha"})
 @Entity
 @Table(name = "profissional")
@@ -25,7 +27,8 @@ public class Profissional extends Usuario {
   @Column(nullable = false, unique = false, length = 512)
 	private String qualificacoes;
 
-  @OneToMany(mappedBy = "profissional")
+
+  @OneToMany(mappedBy = "profissional", cascade=CascadeType.REMOVE)
 	private List<Consulta> consultas;
 
 	public Profissional() {

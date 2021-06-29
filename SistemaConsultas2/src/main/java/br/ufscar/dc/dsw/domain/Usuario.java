@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
+public class Usuario extends AbstractEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
