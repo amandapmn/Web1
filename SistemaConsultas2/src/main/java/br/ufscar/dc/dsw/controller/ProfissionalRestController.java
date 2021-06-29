@@ -67,6 +67,15 @@ public class ProfissionalRestController {
 		return ResponseEntity.ok(profissional);
 	}
 
+  @GetMapping(path = "/profissionais/especialidades/{nome}")
+	public ResponseEntity<List<Profissional>> listaEspecialidades(@PathVariable String nome) {
+		List<Profissional> lista = profissionalService.buscarPorEspecialidade(nome + "%");
+		if (lista == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
+	}
+
 	@PostMapping(path = "/profissionais")
 	@ResponseBody
 	public ResponseEntity<Profissional> cria(@RequestBody JSONObject json) {
