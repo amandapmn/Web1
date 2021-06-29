@@ -10,7 +10,9 @@ import javax.validation.constraints.NotBlank;
 import br.ufscar.dc.dsw.domain.Consulta;
 import br.ufscar.dc.dsw.domain.Usuario;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(value = { "consultas", "senha"})
 @Entity
 @Table(name = "cliente")
 public class Cliente extends Usuario {

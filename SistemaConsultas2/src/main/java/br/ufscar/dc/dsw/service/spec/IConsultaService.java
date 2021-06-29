@@ -11,6 +11,10 @@ public interface IConsultaService {
 
 	void salvar(Consulta consulta);
 
+	Consulta buscarPorId(Long id);
+
+	List<Consulta> buscarTodas();
+
 	List<Consulta> buscarPorCliente(Cliente cliente);
 
 	List<Consulta> buscarPorProfissional(Profissional profissional);

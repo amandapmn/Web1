@@ -15,7 +15,12 @@ public interface IConsultaDAO extends CrudRepository<Consulta, Long> {
 
 	Consulta save(Consulta consulta);
 
+	Consulta findById(long id);
+
+	List<Consulta> findAll();
+
 	List<Consulta> findByProfissional(Profissional profissional);
+
 	List<Consulta> findByCliente(Cliente cliente);
 
 	@Query("SELECT c FROM Consulta c WHERE c.dataHorario = :dataHorario AND c.profissional = :profissional")
