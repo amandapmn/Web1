@@ -16,12 +16,10 @@ import br.ufscar.dc.dsw.domain.Cliente;
 import br.ufscar.dc.dsw.domain.Profissional;
 import java.util.List;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(value = { "data", "horario", "cpfCliente", "cpfProfissional"})
 @Entity
 @Table(name = "consulta")
-public class Consulta extends AbstractEntity<Long> {
+public class Consulta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,14 +63,6 @@ public class Consulta extends AbstractEntity<Long> {
 		this.videoconferencia = videoconferencia;
 		this.cliente = cliente;
 		this.profissional = profissional;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Date getDataHorario() {
