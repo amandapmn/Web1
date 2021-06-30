@@ -26,6 +26,7 @@ import br.ufscar.dc.dsw.service.spec.IConsultaService;
 import br.ufscar.dc.dsw.service.spec.IClienteService;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
 import java.util.Date;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 public class ConsultaRestController {
@@ -39,6 +40,9 @@ public class ConsultaRestController {
   @Autowired
 	private IProfissionalService profissionalService;
 
+  @Autowired
+  BCryptPasswordEncoder encoder;
+
 	private boolean isJSONValid(String jsonInString) {
 		try {
 			return new ObjectMapper().readTree(jsonInString) != null;
@@ -51,7 +55,7 @@ public class ConsultaRestController {
 	private void parse(Cliente cliente, JSONObject json) {
 
 		cliente.setEmail((String) json.get("email"));
-		cliente.setSenha((String) json.get("senha"));
+		cliente.setSenha(encoder.encode((String) json.get("senha")));
     cliente.setCpf((String) json.get("cpf"));
 		cliente.setPrimeiroNome((String) json.get("primeiroNome"));
     cliente.setSobrenome((String) json.get("sobrenome"));
@@ -65,7 +69,7 @@ public class ConsultaRestController {
 	private void parse(Profissional profissional, JSONObject json) {
 
     profissional.setEmail((String) json.get("email"));
-		profissional.setSenha((String) json.get("senha"));
+		profissional.setSenha(encoder.encode((String) json.get("senha")));
     profissional.setCpf((String) json.get("cpf"));
 		profissional.setPrimeiroNome((String) json.get("primeiroNome"));
     profissional.setSobrenome((String) json.get("sobrenome"));

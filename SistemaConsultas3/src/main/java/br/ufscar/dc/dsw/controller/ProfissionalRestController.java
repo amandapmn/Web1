@@ -21,12 +21,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.service.spec.IProfissionalService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 public class ProfissionalRestController {
 
   @Autowired
 	private IProfissionalService profissionalService;
+
+  @Autowired
+  BCryptPasswordEncoder encoder;
 
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -40,7 +44,7 @@ public class ProfissionalRestController {
 	private void parse(Profissional profissional, JSONObject json) {
 
     profissional.setEmail((String) json.get("email"));
-		profissional.setSenha((String) json.get("senha"));
+		profissional.setSenha(encoder.encode((String) json.get("senha")));
     profissional.setCpf((String) json.get("cpf"));
 		profissional.setPrimeiroNome((String) json.get("primeiroNome"));
     profissional.setSobrenome((String) json.get("sobrenome"));

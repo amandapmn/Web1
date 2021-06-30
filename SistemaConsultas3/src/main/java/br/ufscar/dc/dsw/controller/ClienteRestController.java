@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,6 +28,9 @@ public class ClienteRestController {
 
   @Autowired
 	private IClienteService clienteService;
+
+  @Autowired
+  BCryptPasswordEncoder encoder;
 
 	private boolean isJSONValid(String jsonInString) {
 		try {
@@ -40,7 +44,7 @@ public class ClienteRestController {
 	private void parse(Cliente cliente, JSONObject json) {
 
 		cliente.setEmail((String) json.get("email"));
-		cliente.setSenha((String) json.get("senha"));
+		cliente.setSenha(encoder.encode((String) json.get("senha")));
     cliente.setCpf((String) json.get("cpf"));
 		cliente.setPrimeiroNome((String) json.get("primeiroNome"));
     cliente.setSobrenome((String) json.get("sobrenome"));
